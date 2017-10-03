@@ -160,8 +160,9 @@ var store = new vuex.Store({
       commit('showBottomVaultsBar')
     },
     getVaultKeeps({ commit, dispatch }, payload) {
-      api('vaults/' + this.state.user.id + '/uservaults/' + payload).then((res) => {
-        commit('setVaultKeeps', res.data)
+      api('vaults/' + payload + '/keeps').then((res) => {
+        console.log(res)
+        commit('setVaultKeeps', res.data.data)
       })
         .catch((err) => console.error(err))
     },

@@ -24,12 +24,16 @@ module.exports = {
         }
     },
     sharedBoards: {
-        path: '/sharedBoards',
+        path: '/vaults/:vaultId/keeps',
         reqType: 'get',
         method(req, res, next) {
-            Vaults.find({ collaborators: { $in: req.session.uid } })
-                .then(vaults => {
-                    res.send(handleResponse(action, vaults))
+            let action = 'Get Vault Keeps'
+            Vaults.findById(req.params.vaultId)
+                .then(vault => {
+                    var vaultKeeps = []
+                    Keeps.find({ _id: { $in: vault.keeps } }).then(keeps => {
+                        res.send(handleResponse(action, keeps))
+                    })
                 }).catch(error => {
                     return next(handleResponse(action, null, error))
                 })
