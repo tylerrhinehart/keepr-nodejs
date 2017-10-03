@@ -44,7 +44,8 @@ const models = {
   },
   keep: {
     name: 'Keep',
-    endpoint: 'keeps'
+    endpoint: 'keeps',
+    useCustomRoutes: true
   },
 }
 

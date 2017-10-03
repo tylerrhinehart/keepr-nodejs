@@ -56,7 +56,7 @@ var store = new vuex.Store({
       state.userVaults.push(payload)
     },
     findKeep(state, payload) {
-      state.activeKeep = state.homeKeeps.find(k => k.id == payload)
+      state.activeKeep = state.homeKeeps.find(k => k._id == payload)
     },
     clearActiveKeep(state) {
       state.activeKeep = {}
@@ -145,14 +145,13 @@ var store = new vuex.Store({
     addKeep({ commit, dispatch }, payload) {
       // payload.userId = this.state.user.id
       api.post('keeps', payload).then((res) => {
-        console.log(res)
+        console.log(res.data)
         // commit('addKeep', payload)
         dispatch('getKeeps')
       })
     },
     addToVault({ commit, dispatch }, payload) {
       api.put('vaults/' + payload.vaultId + '/addkeep/' + this.state.selectedKeep).then((res) => {
-        console.log(res)
         // commit('addToVault', payload)
       })
     },
@@ -161,21 +160,18 @@ var store = new vuex.Store({
     },
     getVaultKeeps({ commit, dispatch }, payload) {
       api('vaults/' + payload + '/keeps').then((res) => {
-        console.log(res)
         commit('setVaultKeeps', res.data.data)
       })
         .catch((err) => console.error(err))
     },
     getKeeps({ commit, dispatch }) {
       api('keeps').then((res) => {
-        console.log(res.data.data)
         commit('updateKeeps', res.data.data)
       })
         .catch((err) => console.error(err))
     },
     getUserVaults({ commit, dispatch }) {
       api('uservaults').then((res) => {
-        console.log(res.data.data)
         commit('updateVaults', res.data.data)
       })
         .catch((err) => console.error(err))

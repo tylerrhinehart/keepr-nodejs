@@ -30,7 +30,7 @@
 		},
 		methods: {
 			singleView(keep) {
-				router.push('/keeps/' + keep.id)
+				router.push('/keeps/' + keep._id)
 			},
 			selectKeep() {
 				this.$store.dispatch('selectKeep', this.keep._id)
