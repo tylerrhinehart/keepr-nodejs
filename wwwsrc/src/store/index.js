@@ -141,7 +141,6 @@ var store = new vuex.Store({
     },
     addVault({ commit, dispatch }, payload) {
       api.post('vaults', payload).then((res) => {
-        // commit('addVault', res)
         dispatch('getUserVaults')
       })
     },
@@ -158,18 +157,15 @@ var store = new vuex.Store({
         var obj = {
           vaultId: this.state.defaultVault._id
         }
-        console.log(obj)
         dispatch('addToVault', obj)
       })
     },
     incrementKeep({ commit, dispatch }) {
       api.post('keeps/increment/' + this.state.selectedKeep).then((res) => {
-        // console.log(res)
       })
     },
     addToVault({ commit, dispatch }, payload) {
       api.put('vaults/' + payload.vaultId + '/addkeep/' + this.state.selectedKeep).then((res) => {
-        // commit('addToVault', payload)
         dispatch('incrementKeep')
       })
     },
@@ -200,6 +196,11 @@ var store = new vuex.Store({
     },
     setActiveVault({ commit, dispatch }, payload) {
       commit('setActiveVault', payload)
+    },
+    deleteKeep({ commit, dispatch }, payload) {
+      api.delete('keeps/' + payload).then((res) => {
+        dispatch('getKeeps')
+      })
     }
   }
 })
