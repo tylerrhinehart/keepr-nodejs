@@ -36,12 +36,9 @@
             }
         },
         mounted() {
-            // this.$store.dispatch('selectKeep', this.activeKeep._id)
             this.$store.dispatch('findKeep', this.$route.params.keepId)
-        },
-        // destroyed() {
-        //     this.$store.dispatch('clearActiveKeep')
-        // }
+            this.$store.dispatch('incrementKeep', this.$route.params.keepId)
+        }
     }
 
 </script>

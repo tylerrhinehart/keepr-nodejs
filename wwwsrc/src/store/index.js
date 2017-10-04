@@ -91,6 +91,10 @@ var store = new vuex.Store({
     },
     setDefaultVault(state) {
       state.defaultVault = state.userVaults.find(v => v.title == 'Created Keeps')
+    },
+    updateKeep(state, payload) {
+      var index = state.homeKeeps.findIndex(k => k._id == payload._id)
+      state.homeKeeps.splice(index, 1, payload)
     }
   },
 
@@ -160,8 +164,9 @@ var store = new vuex.Store({
         dispatch('addToVault', obj)
       })
     },
-    incrementKeep({ commit, dispatch }) {
-      api.post('keeps/increment/' + this.state.selectedKeep).then((res) => {
+    incrementKeep({ commit, dispatch }, payload) {
+      api.post('keeps/increment/' + (payload ? payload : this.state.selectedKeep)).then((res) => {
+        commit('updateKeep', res.data.data)
       })
     },
     addToVault({ commit, dispatch }, payload) {
