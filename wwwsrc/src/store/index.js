@@ -143,16 +143,19 @@ var store = new vuex.Store({
       commit(clearActiveKeep)
     },
     addKeep({ commit, dispatch }, payload) {
-      // payload.userId = this.state.user.id
       api.post('keeps', payload).then((res) => {
-        console.log(res.data)
-        // commit('addKeep', payload)
         dispatch('getKeeps')
+      })
+    },
+    incrementKeep({ commit, dispatch }) {
+      api.post('keeps/increment/' + this.state.selectedKeep).then((res) => {
+        // console.log(res)
       })
     },
     addToVault({ commit, dispatch }, payload) {
       api.put('vaults/' + payload.vaultId + '/addkeep/' + this.state.selectedKeep).then((res) => {
         // commit('addToVault', payload)
+        dispatch('incrementKeep')
       })
     },
     showBottomVaultsBar({ commit, dispatch }) {
@@ -165,7 +168,7 @@ var store = new vuex.Store({
         .catch((err) => console.error(err))
     },
     getKeeps({ commit, dispatch }) {
-      api('keeps').then((res) => {
+      api('keeps/public/get').then((res) => {
         commit('updateKeeps', res.data.data)
       })
         .catch((err) => console.error(err))

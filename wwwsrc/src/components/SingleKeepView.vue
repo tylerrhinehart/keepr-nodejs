@@ -11,6 +11,8 @@
         <v-card-actions>
             <v-btn flat class="orange--text">Share</v-btn>
             <v-btn flat class="orange--text add-keep" @click="selectKeep">Keep</v-btn>
+            <p>{{activeKeep.adds}}</p>
+            <v-icon>remove_red_eye</v-icon>
         </v-card-actions>
     </v-card>
 </template>

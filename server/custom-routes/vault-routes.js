@@ -2,7 +2,7 @@ let Vaults = require('../models/vault')
 let Keeps = require('../models/keep')
 
 module.exports = {
-    userBoards: {
+    addToVault: {
         path: '/vaults/:vaultId/addkeep/:keepId',
         reqType: 'put',
         method(req, res, next) {
@@ -23,7 +23,7 @@ module.exports = {
                 })
         }
     },
-    sharedBoards: {
+    vaultKeeps: {
         path: '/vaults/:vaultId/keeps',
         reqType: 'get',
         method(req, res, next) {

@@ -16,7 +16,7 @@
     <v-dialog v-model="dialog" persistent width="50%">
       <v-card>
         <v-card-title>
-          <span class="headline">Create New Vault</span>
+          <span class="headline">Create New Keep</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
@@ -28,7 +28,8 @@
                 <v-text-field label="Description" v-model="description"></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field label="Image" v-model="imgUrl"></v-text-field>
+                <!-- <v-text-field type="file" v-model="imgUrl" accept="image/*"></v-text-field> -->
+                <v-btn @click.prevent="openCloud">Upload</v-btn>
               </v-flex>
               <v-switch label="Private" v-model="private"></v-switch>
             </v-layout>
@@ -60,6 +61,12 @@
       }
     },
     methods: {
+      openCloud() {
+        cloudinary.openUploadWidget({ cloud_name: 'tattoo-me', upload_preset: 'tattoopng' },
+          (error, result) => {
+            this.imgUrl = result[0].secure_url
+          })
+      },
       closeDialog() {
         this.dialog = false,
           this.title = '',

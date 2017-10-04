@@ -3,13 +3,46 @@ let Keeps = require('../models/keep')
 
 module.exports = {
     getPublicKeeps: {
-        path: '/keeps/public',
+        path: '/keeps/public/get',
         reqType: 'get',
         method(req, res, next) {
             let action = 'Get public keeps'
             Keeps.find({ private: false })
-                .then(Keeps => {
+                .then(keeps => {
                     res.send(handleResponse(action, keeps))
+                })
+                .catch(error => {
+                    return next(handleResponse(action, null, error))
+                })
+        }
+    },
+    // createKeep: {
+    //     path: '/keeps',
+    //     reqType: 'post',
+    //     method(req, res, next) {
+    //         let action = 'Create New Keep'
+    //         let model = new schema(req.body)
+    //         model.creatorId = req.session.uid
+
+    //         model.save()
+    //             .then(data => {
+    //                 return res.send(handleResponse(action, data))
+    //             })
+    //             .catch(error => {
+    //                 return next(handleResponse(action, null, error))
+    //             })
+    //     }
+    // },
+    incrementKeep: {
+        path: '/keeps/increment/:keepId',
+        reqType: 'post',
+        method(req, res, next) {
+            let action = 'Increment Keep Adds'
+            Keeps.findById(req.params.keepId)
+                .then(keep => {
+                    keep.adds++
+                    keep.save()
+                    res.send(handleResponse(action, keep))
                 })
                 .catch(error => {
                     return next(handleResponse(action, null, error))

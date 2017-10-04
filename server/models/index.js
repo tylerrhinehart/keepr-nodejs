@@ -12,9 +12,9 @@ Object.keys(models).forEach((k) => {
 		api.route(`/${model.endpoint}/:id?`)[method](routes[method])
 	})
 
-	if(model.useCustomRoutes){
+	if (model.useCustomRoutes) {
 		let customRoutes = require('../custom-routes/' + model.name.toLowerCase() + '-routes')
-		if(customRoutes){
+		if (customRoutes) {
 			Object.keys(customRoutes).forEach(k => {
 				let route = customRoutes[k]
 				api.route(route.path)[route.reqType](route.method)
