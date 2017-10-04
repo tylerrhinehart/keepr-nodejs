@@ -40,7 +40,8 @@ var store = new vuex.Store({
     activeVaultKeeps: [],
     activeKeep: {},
     showBottomVaultsBar: false,
-    selectedKeep: ''
+    selectedKeep: '',
+    defaultVault: ''
   },
 
   mutations: {
@@ -87,6 +88,9 @@ var store = new vuex.Store({
     },
     setVaultKeeps(state, payload) {
       state.activeVaultKeeps = payload
+    },
+    setDefaultVault(state) {
+      state.defaultVault = state.userVaults.find(v => v.title == 'Created Keeps')
     }
   },
 
@@ -100,9 +104,10 @@ var store = new vuex.Store({
         })
         .catch((err) => console.error(err))
     },
-    signup({ commit, dispath }, payload) {
+    signup({ commit, dispatch }, payload) {
       auth.post('register', payload).then((res) => {
         commit('login', res.data.data)
+        dispatch('defaultVault')
       })
         .catch((err) => console.error(err))
     },
@@ -117,18 +122,22 @@ var store = new vuex.Store({
         if (!res.data.data) {
           return router.push('/')
         }
-        // var user = {
-        //   id: res.data.id,
-        //   email: res.data.email,
-        //   userName: res.data.userName,
-        //   profileImgUrl: res.data.profileImgUrl
-        // }
         commit('login', res.data.data)
       })
         .then(() => {
           dispatch('getUserVaults')
         })
         .catch((err) => console.error(err))
+    },
+    defaultVault({ commit, dispatch }) {
+      var vault = {
+        title: 'Created Keeps',
+        description: 'Creates that I created',
+        private: true
+      }
+      api.post('vaults', vault).then((res) => {
+        dispatch('getUserVaults')
+      })
     },
     addVault({ commit, dispatch }, payload) {
       api.post('vaults', payload).then((res) => {
@@ -145,6 +154,12 @@ var store = new vuex.Store({
     addKeep({ commit, dispatch }, payload) {
       api.post('keeps', payload).then((res) => {
         dispatch('getKeeps')
+        commit('selectKeep', res.data.data._id)
+        var obj = {
+          vaultId: this.state.defaultVault._id
+        }
+        console.log(obj)
+        dispatch('addToVault', obj)
       })
     },
     incrementKeep({ commit, dispatch }) {
@@ -176,6 +191,7 @@ var store = new vuex.Store({
     getUserVaults({ commit, dispatch }) {
       api('uservaults').then((res) => {
         commit('updateVaults', res.data.data)
+        commit('setDefaultVault')
       })
         .catch((err) => console.error(err))
     },
