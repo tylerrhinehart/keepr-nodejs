@@ -10,7 +10,7 @@
         <Keep :keep="keep"></Keep>
       </v-flex>
     </v-layout>
-    <v-btn id="add-keep" primary fab fixed bottom right v-model="fab" @click="dialog = true">
+    <v-btn v-show="loggedIn" id="add-keep" primary fab fixed bottom right v-model="fab" @click="dialog = true">
       <v-icon>add</v-icon>
     </v-btn>
     <v-dialog v-model="dialog" persistent width="50%">
@@ -88,6 +88,9 @@
     computed: {
       keeps() {
         return this.$store.state.homeKeeps
+      },
+      loggedIn() {
+        return this.$store.state.loggedIn
       }
     },
     mounted() {
