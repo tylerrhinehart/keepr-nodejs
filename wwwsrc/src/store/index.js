@@ -4,7 +4,7 @@ import vuex from 'vuex'
 import router from '../router'
 
 var production = !window.location.host.includes('localhost');
-var baseUrl = production ? '//trhinehart-keepr.herokuapp.com/' : '//localhost:3000/';
+var baseUrl = production ? '//tyler-keepr.herokuapp.com/' : '//localhost:3000/';
 
 let auth = axios.create({
   baseURL: baseUrl,

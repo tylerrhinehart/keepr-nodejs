@@ -7,7 +7,7 @@ import store from './store'
 import Vuetify from 'vuetify'
 
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 import('../node_modules/vuetify/dist/vuetify.min.css')
 Vue.use(Vuetify)
 
