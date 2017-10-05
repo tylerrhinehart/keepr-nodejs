@@ -22,7 +22,7 @@ let defaultErrorHandler = (err, req, res, next) => {
 }
 
 //Default Urls 
-var whitelist = ['http://localhost:9999', 'http://portal.boisecodeworks.com', 'http://tyler-keepr.kerokuapp.com'];
+var whitelist = ['http://localhost:9999', 'http://portal.boisecodeworks.com', 'https://tyler-keepr.kerokuapp.com'];
 var corsOptions = {
 	origin: function (origin, callback) {
 		var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
