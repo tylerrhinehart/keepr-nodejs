@@ -38,6 +38,7 @@ module.exports = {
         method(req, res, next) {
             let action = 'Increment Keep Adds'
             Keeps.find({ $text: { $search: req.body.value } })
+            .where('private').equals(false)
                 .then(keeps => {
                     res.send(handleResponse(action, keeps))
                 })
