@@ -31,7 +31,8 @@ var store = new vuex.Store({
     activeKeep: {},
     showBottomVaultsBar: false,
     selectedKeep: '',
-    defaultVault: ''
+    defaultVault: '',
+    searchResults: []
   },
 
   mutations: {
@@ -85,6 +86,9 @@ var store = new vuex.Store({
     updateKeep(state, payload) {
       var index = state.homeKeeps.findIndex(k => k._id == payload._id)
       state.homeKeeps.splice(index, 1, payload)
+    },
+    searchResults(state, payload) {
+      state.searchResults = payload;
     }
   },
 
@@ -199,8 +203,10 @@ var store = new vuex.Store({
       })
     },
     search({ commit, dispatch }, payload) {
-      api.post('search', payload).then((res) => {
-        commit('updateKeeps', res.data.data)
+      axios.post(baseUrl + 'search', payload).then((res) => {
+        console.log(res)
+        commit('searchResults', res.data.data)
+        router.push('/search')
       })
     }
   }

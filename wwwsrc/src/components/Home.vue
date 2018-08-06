@@ -28,7 +28,6 @@
                 <v-text-field label="Description" v-model="description"></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <!-- <v-text-field type="file" v-model="imgUrl" accept="image/*"></v-text-field> -->
                 <v-btn @click.prevent="openCloud">Upload</v-btn>
               </v-flex>
               <v-switch label="Private" v-model="isPrivate"></v-switch>
@@ -103,7 +102,6 @@
 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   h1,
   h2 {

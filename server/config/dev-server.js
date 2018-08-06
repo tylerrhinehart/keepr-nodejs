@@ -7,6 +7,7 @@ var corsOptions = require('./handlers').corsOptions
 var api = require('../models')
 var session = require('../authentication/sessions')
 var Auth = require('../authentication/auth')
+var searchController = require('../custom-routes/searchController')
 
 // ENABLE ROUTES IF USING app SIDE ROUTING
 // import routes from './routes'
@@ -36,6 +37,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('*', logger)
 app.use('*', cors(corsOptions))
 app.use('/', Auth)
+
+app.use('/search', searchController)
 
 // LOCKS API TO REQUIRE USER AUTH
 app.use(Validate)
