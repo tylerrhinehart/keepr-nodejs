@@ -47,8 +47,13 @@
         },
         methods: {
             selectKeep() {
-                this.$store.dispatch('selectKeep', this.activeKeep._id)
-                this.$store.dispatch('showBottomVaultsBar')
+                if (this.$store.state.loggedIn) {
+                    this.$store.dispatch('selectKeep', this.activeKeep._id)
+                    this.$store.dispatch('showBottomVaultsBar')
+                } else {
+                    this.$emit('login')
+                }
+
             },
             deleteKeep() {
                 this.$store.dispatch('deleteKeep', this.keep._id)

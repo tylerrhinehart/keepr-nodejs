@@ -7,7 +7,7 @@
         </v-card>
       </v-flex>
       <v-flex xs4 v-for="(keep, i) in keeps" :key="i">
-        <Keep :keep="keep"></Keep>
+        <Keep :keep="keep" @login="$emit('login')"></Keep>
       </v-flex>
     </v-layout>
     <v-btn v-show="loggedIn" id="add-keep" primary fab fixed bottom right v-model="fab" @click="dialog = true">

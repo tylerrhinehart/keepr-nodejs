@@ -23,11 +23,10 @@
       </v-btn>
     </v-toolbar>
     <main id="main">
-      <router-view></router-view>
+      <router-view @login="openLogin"></router-view>
     </main>
     <v-layout row justify-center>
       <v-dialog v-model="dialog" persistent width="50%">
-        <!-- <v-btn primary dark slot="activator">Open Dialog</v-btn> -->
         <v-card>
           <v-card-title>
             <span class="headline">{{authType}}</span>
@@ -36,13 +35,10 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex v-show="authType == 'Sign Up'" xs12 sm6 md6>
-                  <v-text-field label="Legal first name" required v-model="formInput.firstName"></v-text-field>
+                  <v-text-field label="First name" required v-model="formInput.firstName"></v-text-field>
                 </v-flex>
-                <!-- <v-flex xs12 sm6 md4>
-                  <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                </v-flex> -->
                 <v-flex v-show="authType == 'Sign Up'" xs12 sm6 md6>
-                  <v-text-field label="Legal last name" required v-model="formInput.lastName"></v-text-field>
+                  <v-text-field label="Last name" required v-model="formInput.lastName"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                   <v-text-field label="Email" required v-model="formInput.email"></v-text-field>
@@ -56,12 +52,6 @@
                 <v-flex v-show="authType == 'Sign Up'" xs12>
                   <v-text-field label="Confirm Password" type="password" required v-model="formInput.confirmPassword"></v-text-field>
                 </v-flex>
-                <!-- <v-flex xs12 sm6>
-                  <v-select label="Age" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
-                </v-flex> -->
-                <!-- <v-flex xs12 sm6>
-                  <v-select label="Interests" multiple autocomplete chips :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"></v-select>
-                </v-flex> -->
               </v-layout>
             </v-container>
             <small>*indicates required field</small>
@@ -75,7 +65,7 @@
       </v-dialog>
     </v-layout>
     <v-footer id="footer" :fixed="fixed">
-      <span>Keepr &copy; 2017</span>
+      <span>Keepr &copy; 2018</span>
     </v-footer>
     <BottomVaultsBar></BottomVaultsBar>
   </v-app>
@@ -170,6 +160,10 @@
       },
       myVaults() {
         router.push('/vaults')
+      },
+      openLogin() {
+        this.dialog = true;
+        this.authType = 'Login';
       }
     },
     computed: {
