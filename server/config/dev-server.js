@@ -42,20 +42,4 @@ app.use(Validate)
 app.use('/api', api)
 app.use('/', defaultErrorHandler)
 
-let io = require('socket.io')(server, {
-    origins: '*:*'
-})
-
-io.on('connection', function (socket) {
-    socket.emit('CONNECTED', {
-        socket: socket.id,
-        message: 'Welcome to the Jungle'
-    })
-
-    socket.on('update', (d) => {
-        console.log(d)
-    })
-
-})
-
 module.exports = server

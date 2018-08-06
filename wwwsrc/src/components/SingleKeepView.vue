@@ -19,12 +19,12 @@
         <v-card-text>
             <span>{{activeKeep.description}}</span>
         </v-card-text>
-        <!-- <v-card-actions>
+        <v-card-actions>
             <v-btn flat class="orange--text">Share</v-btn>
             <v-btn flat class="orange--text add-keep" @click="selectKeep">Keep</v-btn>
             <p>{{activeKeep.adds}}</p>
             <v-icon>remove_red_eye</v-icon>
-        </v-card-actions> -->
+        </v-card-actions>
     </v-card>
 </template>
 
@@ -47,6 +47,7 @@
         },
         methods: {
             selectKeep() {
+                this.$store.dispatch('selectKeep', this.activeKeep._id)
                 this.$store.dispatch('showBottomVaultsBar')
             },
             deleteKeep() {
@@ -60,7 +61,7 @@
         },
         mounted() {
             this.$store.dispatch('findKeep', this.$route.params.keepId)
-            this.$store.dispatch('incrementKeep', this.$route.params.keepId)
+            // this.$store.dispatch('incrementKeep', this.$route.params.keepId)
             if (this.$store.state.user._id == this.activeKeep.creatorId) {
                 var remove = {
                     title: 'Remove',

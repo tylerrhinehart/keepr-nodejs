@@ -166,7 +166,8 @@ var store = new vuex.Store({
     },
     incrementKeep({ commit, dispatch }, payload) {
       api.post('keeps/increment/' + (payload ? payload : this.state.selectedKeep)).then((res) => {
-        commit('updateKeep', res.data.data)
+        if(res.data.error) return;
+        commit('updateKeep', res.data.data);
       })
     },
     addToVault({ commit, dispatch }, payload) {

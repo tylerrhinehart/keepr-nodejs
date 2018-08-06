@@ -11,7 +11,7 @@
                     </v-card-title>
                 </v-card>
             </v-flex>
-            <v-flex xs4 v-for="keep in activeVaultKeeps">
+            <v-flex xs4 v-for="(keep, i) in activeVaultKeeps" :key="i">
                 <Keep :keep="keep"></Keep>
             </v-flex>
         </v-layout>

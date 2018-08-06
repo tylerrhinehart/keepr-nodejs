@@ -20,8 +20,12 @@ router.post('/register', (req, res) => {
 
 
 router.post('/login', (req, res) => {
-  Users.findOne({ email: req.body.email })
+  console.log(req.body.password)
+  Users.findOne({ 'email': req.body.email })
     .then(user => {
+      console.log(req.body.password)
+      console.log(user)
+      console.log(user.methods)
       user.validatePassword(req.body.password)
         .then(valid => {
           if(!valid){
@@ -29,6 +33,7 @@ router.post('/login', (req, res) => {
           }
           req.session.uid = user._id;
           req.session.save()
+          console.log(req.session);
           user.password = null
           delete user.password
           res.send({
@@ -57,6 +62,7 @@ router.delete('/logout', (req, res) => {
 
 
 router.get('/authenticate', (req,res) => {
+  console.log(req.session)
   Users.findById(req.session.uid).then(user => {
     return res.send ({
       data: user

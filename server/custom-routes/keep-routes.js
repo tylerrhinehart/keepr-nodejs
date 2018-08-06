@@ -40,6 +40,7 @@ module.exports = {
             let action = 'Increment Keep Adds'
             Keeps.findById(req.params.keepId)
                 .then(keep => {
+                    console.log(keep)
                     keep.adds++
                     keep.save()
                     res.send(handleResponse(action, keep))
