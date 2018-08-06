@@ -16,23 +16,6 @@ module.exports = {
                 })
         }
     },
-    // createKeep: {
-    //     path: '/keeps',
-    //     reqType: 'post',
-    //     method(req, res, next) {
-    //         let action = 'Create New Keep'
-    //         let model = new schema(req.body)
-    //         model.creatorId = req.session.uid
-
-    //         model.save()
-    //             .then(data => {
-    //                 return res.send(handleResponse(action, data))
-    //             })
-    //             .catch(error => {
-    //                 return next(handleResponse(action, null, error))
-    //             })
-    //     }
-    // },
     incrementKeep: {
         path: '/keeps/increment/:keepId',
         reqType: 'post',
@@ -40,7 +23,6 @@ module.exports = {
             let action = 'Increment Keep Adds'
             Keeps.findById(req.params.keepId)
                 .then(keep => {
-                    console.log(keep)
                     keep.adds++
                     keep.save()
                     res.send(handleResponse(action, keep))
@@ -50,40 +32,20 @@ module.exports = {
                 })
         }
     },
-    // postKeep: {
-    //     path: '/keeps',
-    //     reqType: 'post',
-    //     method(req, res, next) {
-    //         var action = actions.create
-
-    //         let model = new schema(req.body)
-    //         model.creatorId = req.session.uid
-
-    //         model.save()
-    //             .then(data => {
-    //                 return res.send(handleResponse(action, data))
-    //             })
-    //             .catch(error => {
-    //                 return next(handleResponse(action, null, error))
-    //             })
-    //     }
-    // },
-    // sharedBoards: {
-    //     path: '/vaults/:vaultId/keeps',
-    //     reqType: 'get',
-    //     method(req, res, next) {
-    //         let action = 'Get Vault Keeps'
-    //         Vaults.findById(req.params.vaultId)
-    //             .then(vault => {
-    //                 var vaultKeeps = []
-    //                 Keeps.find({ _id: { $in: vault.keeps } }).then(keeps => {
-    //                     res.send(handleResponse(action, keeps))
-    //                 })
-    //             }).catch(error => {
-    //                 return next(handleResponse(action, null, error))
-    //             })
-    //     }
-    // }
+    search: {
+        path: '/search',
+        reqType: 'post',
+        method(req, res, next) {
+            let action = 'Increment Keep Adds'
+            Keeps.find({ $text: { $search: req.body.value } })
+                .then(keeps => {
+                    res.send(handleResponse(action, keeps))
+                })
+                .catch(error => {
+                    return next(handleResponse(action, null, error))
+                })
+        }
+    }
 }
 
 

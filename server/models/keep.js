@@ -12,4 +12,6 @@ var schema = new mongoose.Schema({
     adds: { type: Number, default: 0 }
 });
 
+schema.index({ title: 'text', description: 'text' })
+
 module.exports = mongoose.model(models.keep.name, schema);
