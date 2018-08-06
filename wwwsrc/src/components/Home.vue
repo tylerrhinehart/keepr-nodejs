@@ -6,7 +6,7 @@
           <v-card-text class="px-0">Top Keeps</v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs4 v-for="keep in keeps">
+      <v-flex xs4 v-for="(keep, i) in keeps" :key="i">
         <Keep :keep="keep"></Keep>
       </v-flex>
     </v-layout>
@@ -31,7 +31,7 @@
                 <!-- <v-text-field type="file" v-model="imgUrl" accept="image/*"></v-text-field> -->
                 <v-btn @click.prevent="openCloud">Upload</v-btn>
               </v-flex>
-              <v-switch label="Private" v-model="private"></v-switch>
+              <v-switch label="Private" v-model="isPrivate"></v-switch>
             </v-layout>
           </v-container>
           <small>*indicates required field</small>
@@ -54,7 +54,7 @@
       return {
         fab: false,
         dialog: false,
-        private: '',
+        isPrivate: '',
         title: '',
         description: '',
         imgUrl: ''
@@ -72,14 +72,14 @@
           this.title = '',
           this.description = '',
           this.imgUrl = '',
-          this.private = false
+          this.isPrivate = false
       },
       createKeep() {
         var newKeep = {
           title: this.title,
           description: this.description,
           url: this.imgUrl,
-          private: this.private
+          private: this.isPrivate
         }
         this.$store.dispatch('addKeep', newKeep)
         this.closeDialog()

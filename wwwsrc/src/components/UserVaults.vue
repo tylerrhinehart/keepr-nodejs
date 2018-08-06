@@ -6,7 +6,7 @@
 					<v-card-text class="px-0">My Vaults</v-card-text>
 				</v-card>
 			</v-flex>
-			<v-flex xs4 v-for="vault in userVaults">
+			<v-flex xs4 v-for="(vault, i) in userVaults" :key="i">
 				<Vault :vault="vault"></Vault>
 			</v-flex>
 		</v-layout>
@@ -27,7 +27,7 @@
 							<v-flex xs12>
 								<v-text-field label="Description" v-model="description"></v-text-field>
 							</v-flex>
-							<v-switch label="Private" v-model="private"></v-switch>
+							<v-switch label="Private" v-model="isPrivate"></v-switch>
 						</v-layout>
 					</v-container>
 					<small>*indicates required field</small>
@@ -52,7 +52,7 @@
 				dialog: false,
 				title: '',
 				description: '',
-				private: false
+				isPrivate: false
 			}
 		},
 		methods: {
@@ -60,13 +60,13 @@
 				this.dialog = false,
 					this.title = '',
 					this.description = '',
-					this.private = false
+					this.isPrivate = false
 			},
 			createVault() {
 				var newVault = {
 					title: this.title,
 					description: this.description,
-					// private: this.private
+					// private: this.isPrivate
 				}
 				this.$store.dispatch('addVault', newVault)
 				this.closeDialog()

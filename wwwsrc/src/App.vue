@@ -15,6 +15,7 @@
     <v-toolbar fixed>
       <v-toolbar-title v-text="title" @click="home"></v-toolbar-title>
       <v-spacer></v-spacer>
+      <Search></Search>
       <v-btn v-show="!loggedIn" @click="form('Login')">Login</v-btn>
       <v-btn v-show="!loggedIn" @click="form('Sign Up')">Sign Up</v-btn>
       <v-btn v-show="loggedIn" icon @click.stop="drawer = !drawer">
@@ -83,6 +84,7 @@
 <script>
   import router from "./router"
   import BottomVaultsBar from './components/BottomVaultsBar'
+  import Search from './components/Search'
   export default {
     name: 'app',
     data() {
@@ -176,7 +178,8 @@
       }
     },
     components: {
-      BottomVaultsBar
+      BottomVaultsBar,
+      Search
     },
     mounted() {
       this.$store.dispatch('getAuth')

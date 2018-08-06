@@ -24,18 +24,8 @@ var store = new vuex.Store({
   state: {
     user: {},
     loggedIn: false,
-    userVaults: [
-      // { id: 1, title: 'Tigers', description: 'cool tiger keeps' },
-      // { id: 2, title: 'Bears', description: 'cool bear keeps' }
-    ],
-    homeKeeps: [
-      //   { id: 1, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
-      //   { id: 2, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
-      //   { id: 3, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
-      //   { id: 4, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
-      //   { id: 5, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
-      //   { id: 6, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' }
-    ],
+    userVaults: [],
+    homeKeeps: [],
     activeVault: {},
     activeVaultKeeps: [],
     activeKeep: {},
@@ -166,7 +156,8 @@ var store = new vuex.Store({
     },
     incrementKeep({ commit, dispatch }, payload) {
       api.post('keeps/increment/' + (payload ? payload : this.state.selectedKeep)).then((res) => {
-        commit('updateKeep', res.data.data)
+        if (res.data.error) return;
+        commit('updateKeep', res.data.data);
       })
     },
     addToVault({ commit, dispatch }, payload) {
@@ -205,6 +196,11 @@ var store = new vuex.Store({
     deleteKeep({ commit, dispatch }, payload) {
       api.delete('keeps/' + payload).then((res) => {
         dispatch('getKeeps')
+      })
+    },
+    search({ commit, dispatch }, payload) {
+      api.post('search', payload).then((res) => {
+        commit('updateKeeps', res.data.data)
       })
     }
   }
