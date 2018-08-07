@@ -1,7 +1,7 @@
 <template>
   <v-app light>
-    <v-navigation-drawer temporary :mini-variant="miniVariant" :clipped="clipped" :right="right" v-model="drawer" enable-resize-watcher>
-      <v-list>
+    <v-navigation-drawer v-cloak temporary :mini-variant="miniVariant" :clipped="clipped" :right="right" v-model="drawer" enable-resize-watcher>
+      <v-list v-cloak>
         <v-list-tile v-for="(item, i) in items" :key="i" value="true" @click="item.function">
           <v-list-tile-action>
             <v-icon light v-html="item.icon"></v-icon>
@@ -12,7 +12,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed>
+    <v-toolbar fixed v-cloak>
       <v-toolbar-title v-text="title" @click="home"></v-toolbar-title>
       <v-spacer></v-spacer>
       <Search></Search>
@@ -23,9 +23,9 @@
       </v-btn>
     </v-toolbar>
     <main id="main">
-      <router-view @login="openLogin"></router-view>
+      <router-view @login="openLogin" v-cloak></router-view>
     </main>
-    <v-layout row justify-center>
+    <v-layout row justify-center v-cloak>
       <v-dialog v-model="dialog" persistent width="50%">
         <v-card>
           <v-card-title>
@@ -64,7 +64,7 @@
         </v-card>
       </v-dialog>
     </v-layout>
-    <v-footer id="footer" :fixed="fixed">
+    <v-footer v-cloak id="footer" :fixed="fixed">
       <span>Keepr &copy; 2018</span>
     </v-footer>
     <BottomVaultsBar></BottomVaultsBar>
@@ -190,6 +190,10 @@
     text-align: center;
     color: #2c3e50;
     margin-top: 2vh;
+  }
+
+  [v-cloack] {
+    display: none;
   }
 
   #main {

@@ -4,13 +4,6 @@ var Keeps = require('../models/keep')
 
 //Standard routes get/push/put/delete 
 router
-    .get('/', (req, res, next) => {
-        galaxies.find(req.query)
-            .then(galaxies => {
-                res.send(galaxies)
-            })
-            .catch(next)
-    })
     .post('/', (req, res, next) => {
         Keeps.find({ $text: { $search: req.body.value } })
             .where('private').equals(false)
