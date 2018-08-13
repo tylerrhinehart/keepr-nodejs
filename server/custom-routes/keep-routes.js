@@ -7,7 +7,7 @@ module.exports = {
         reqType: 'get',
         method(req, res, next) {
             let action = 'Get public keeps'
-            Keeps.find({ private: false })
+            Keeps.find({ private: false }).sort({created: -1})
                 .then(keeps => {
                     res.send(handleResponse(action, keeps))
                 })
@@ -31,22 +31,7 @@ module.exports = {
                     return next(handleResponse(action, null, error))
                 })
         }
-    },
-    // search: {
-    //     path: '/search',
-    //     reqType: 'post',
-    //     method(req, res, next) {
-    //         let action = 'Increment Keep Adds'
-    //         Keeps.find({ $text: { $search: req.body.value } })
-    //         .where('private').equals(false)
-    //             .then(keeps => {
-    //                 res.send(handleResponse(action, keeps))
-    //             })
-    //             .catch(error => {
-    //                 return next(handleResponse(action, null, error))
-    //             })
-    //     }
-    // }
+    }
 }
 
 

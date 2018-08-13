@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-card-media :src="activeKeep.url" height="400px">
+        <v-card-media :src="activeKeep.url" height="50rem">
         </v-card-media>
         <v-card-title class="blue white--text">
             <span class="headline">{{activeKeep.title}}</span>

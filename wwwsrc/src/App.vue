@@ -177,6 +177,14 @@
     },
     mounted() {
       this.$store.dispatch('getAuth')
+      
+      if(!this.loggedIn) {
+        var loginForm = {
+          email: 'demo@example.com',
+          password: 'password'
+        }
+        this.$store.dispatch('login', loginForm)
+      }
     }
   }
 

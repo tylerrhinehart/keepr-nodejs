@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <div @click="singleView">
-            <v-card-media :src="vault.imgUrl" height="200px">
+            <v-card-media :src="imgUrl" height="200px">
             </v-card-media>
             <v-card-title primary-title>
                 <div>
@@ -18,21 +18,31 @@
 </template>
 
 <script>
-    import router from '../router'
-    export default {
-        name: 'Vault',
-        props: ["vault"],
-        data() {
-            return {
+import router from "../router";
+import axios from "axios";
+export default {
+  name: "Vault",
+  props: ["vault"],
+  data() {
+    return {
+      imgUrl: ""
+    };
+  },
+  mounted() {
+    var production = !window.location.host.includes("localhost");
+    var baseUrl = production
+      ? "//tyler-keepr.herokuapp.com/"
+      : "//localhost:3000/";
 
-            }
-        },
-        methods: {
-            singleView() {
-                this.$store.dispatch('setActiveVault', this.vault)
-                router.push('/vaults/' + this.vault._id)
-            }
-        }
+    axios.get(baseUrl + "api/vaults/" + this.vault._id + "/keeps").then(res => {
+        this.imgUrl = res.data.data[0].url;
+    })
+  },
+  methods: {
+    singleView() {
+      this.$store.dispatch("setActiveVault", this.vault);
+      router.push("/vaults/" + this.vault._id);
     }
-
+  }
+};
 </script>

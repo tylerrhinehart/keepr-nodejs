@@ -27,6 +27,13 @@
               <v-flex xs12>
                 <v-text-field label="Description" v-model="description"></v-text-field>
               </v-flex>
+              <v-flex xs 12>
+                <v-list>
+                  <v-list-tile v-for="(upload, index) in uploads" :key="index">
+                      <v-list-tile-title>{{ upload.original_filename }}</v-list-tile-title>
+                  </v-list-tile>
+                </v-list>
+              </v-flex>
               <v-flex xs12>
                 <v-btn @click.prevent="openCloud">Upload</v-btn>
               </v-flex>
@@ -46,83 +53,87 @@
 </template>
 
 <script>
-  import Keep from './Keep'
-  export default {
-    name: 'home',
-    data() {
-      return {
-        fab: false,
-        dialog: false,
-        isPrivate: '',
-        title: '',
-        description: '',
-        imgUrl: ''
-      }
-    },
-    methods: {
-      openCloud() {
-        cloudinary.openUploadWidget({ cloud_name: 'tattoo-me', upload_preset: 'tattoopng' },
-          (error, result) => {
-            this.imgUrl = result[0].secure_url
-          })
-      },
-      closeDialog() {
-        this.dialog = false,
-          this.title = '',
-          this.description = '',
-          this.imgUrl = '',
-          this.isPrivate = false
-      },
-      createKeep() {
-        var newKeep = {
-          title: this.title,
-          description: this.description,
-          url: this.imgUrl,
-          private: this.isPrivate
+import Keep from "./Keep";
+export default {
+  name: "home",
+  data() {
+    return {
+      fab: false,
+      dialog: false,
+      isPrivate: "",
+      title: "",
+      description: "",
+      imgUrl: "",
+      uploads: []
+    };
+  },
+  methods: {
+    openCloud() {
+      cloudinary.openUploadWidget(
+        { cloud_name: "tattoo-me", upload_preset: "tattoopng" },
+        (error, result) => {
+          this.uploads = result
+          this.imgUrl = result[0].secure_url;
         }
-        this.$store.dispatch('addKeep', newKeep)
-        this.closeDialog()
-      }
+      );
     },
-    computed: {
-      keeps() {
-        return this.$store.state.homeKeeps
-      },
-      loggedIn() {
-        return this.$store.state.loggedIn
-      }
+    closeDialog() {
+      (this.dialog = false),
+        (this.title = ""),
+        (this.description = ""),
+        (this.imgUrl = ""),
+        (this.isPrivate = false);
+        this.uploads = []
     },
-    mounted() {
-      this.$store.dispatch('getKeeps')
-    },
-    components: {
-      Keep
+    createKeep() {
+      var newKeep = {
+        title: this.title,
+        description: this.description,
+        url: this.imgUrl,
+        private: this.isPrivate
+      };
+      this.$store.dispatch("addKeep", newKeep);
+      this.closeDialog();
     }
+  },
+  computed: {
+    keeps() {
+      return this.$store.state.homeKeeps;
+    },
+    loggedIn() {
+      return this.$store.state.loggedIn;
+    }
+  },
+  mounted() {
+    this.$store.dispatch("getKeeps");
+  },
+  components: {
+    Keep
   }
-
+};
 </script>
 
 <style scoped>
-  h1,
-  h2 {
-    font-weight: normal;
-  }
+h1,
+h2 {
+  font-weight: normal;
+}
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
+ul {
+  list-style-type: none;
+  padding: 0;
+}
 
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
 
-  a {
-    color: #42b983;
-  }
+a {
+  color: #42b983;
+}
 
-  #add-keep {
-    z-index: 9999;
-  }
+#add-keep {
+  z-index: 9999;
+}
 </style>

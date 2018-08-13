@@ -130,7 +130,7 @@ var store = new vuex.Store({
     defaultVault({ commit, dispatch }) {
       var vault = {
         title: 'Created Keeps',
-        description: 'Creates that I created',
+        description: 'Keeps that I created',
         private: true
       }
       api.post('vaults', vault).then((res) => {
@@ -204,7 +204,6 @@ var store = new vuex.Store({
     },
     search({ commit, dispatch }, payload) {
       axios.post(baseUrl + 'search', payload).then((res) => {
-        console.log(res)
         commit('searchResults', res.data.data)
         router.push('/search')
       })
